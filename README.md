@@ -11,6 +11,8 @@ Things you may want to cover:
 * Configuration
 
 * Database creation
+  Development Database: SQLite3
+  Production Database: PostGreSQL
 
 * Database initialization
 
@@ -19,5 +21,4 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-
-* ...
+  deployed on heroku
