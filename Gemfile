@@ -61,6 +61,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Use sqlite3 as the development database for Active Record
   gem 'sqlite3'
+  gem 'pry-rails'
 end
 
 
