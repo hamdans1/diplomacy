@@ -110,4 +110,17 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+  describe "DELETE destroy" do
+    it "deletes the campaign" do
+      delete :destroy, {:params => {:id => my_campaign.id}}
+      count = Campaign.where({id: my_campaign.id}).size
+      expect(count).to eq(0)
+    end
+
+    it "redirects to campaign index" do
+      delete :destroy, {:params => {:id => my_campaign.id}}
+      expect(response).to redirect_to campaigns_path
+    end
+  end
+
 end

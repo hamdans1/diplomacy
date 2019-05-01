@@ -42,4 +42,16 @@ class CampaignsController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @campaign = Campaign.find(params[:id])
+
+    if @campaign.destroy
+      flash[:notice] = "#{@campaign.title} was deleted successfully."
+      redirect_to campaigns_path
+    else
+      flash.now[:alert] = "There was an error deleting the post."
+      render :show
+    end
+  end
 end
