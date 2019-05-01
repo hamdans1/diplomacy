@@ -1,2 +1,9 @@
-<h1>Campaigns#new</h1>
-<p>Find me in app/views/campaigns/new.html.erb</p>
+<%= form_for @campaign do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :scoring %>
+  <%= f.text_field :scoring %>
+
+  <%= f.submit "Save" %>
+<% end %>
