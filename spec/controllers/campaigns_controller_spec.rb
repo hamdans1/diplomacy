@@ -67,11 +67,47 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
-  # describe "GET #edit" do
-  #   it "returns http success" do
-  #     get :edit
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+  describe "GET #edit" do
+    it "returns http success" do
+      get :edit, :params => {id: my_campaign.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "returns the #edit view" do
+      get :edit, :params => {id: my_campaign.id}
+      expect(response).to render_template :edit
+    end
+
+    it "assigns campaign to be updated to @campaign" do
+      get :edit, :params => {id: my_campaign.id}
+      campaign_instance = assigns(:campaign)
+
+      expect(campaign_instance.id).to eq my_campaign.id
+      expect(campaign_instance.title).to eq my_campaign.title
+      expect(campaign_instance.scoring).to eq my_campaign.scoring
+    end
+  end
+
+  describe "PUT update" do
+    it "updates post with expected attribute" do
+      new_title = RandomData.random_sentence
+      new_scoring = RandomData.random_sentence
+
+      put :update, {:params => {:id => my_campaign.id, :campaign => {title: new_title, scoring: new_scoring}}}
+
+      updated_campaign = assigns(:campaign)
+      expect(updated_campaign.id).to eq my_campaign.id
+      expect(updated_campaign.title).to eq new_title
+      expect(updated_campaign.scoring).to eq new_scoring
+    end
+
+    it "redirects to the updated post" do
+      new_title = RandomData.random_sentence
+      new_scoring = RandomData.random_sentence
+
+      put :update, {:params => {:id => my_campaign.id, :campaign => {title: new_title, scoring: new_scoring}}}
+      expect(response).to redirect_to my_campaign
+    end
+  end
 
 end

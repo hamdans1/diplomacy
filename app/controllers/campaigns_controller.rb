@@ -26,5 +26,20 @@ class CampaignsController < ApplicationController
   end
 
   def edit
+    @campaign = Campaign.find(params[:id])
+  end
+
+  def update
+    @campaign = Campaign.find(params[:id])
+    @campaign.title = params[:campaign][:title]
+    @campaign.scoring = params[:campaign][:scoring]
+
+    if @campaign.save
+      flash[:notice] = "Your campaign has been updated"
+      redirect_to @campaign
+    else
+      flash.now[:alert] = "There was an error saving your campaign. Please Try again"
+      render :edit
+    end
   end
 end
