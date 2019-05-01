@@ -40,18 +40,19 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+
   describe "POST create" do
     it "increases the number of Campaign by 1" do
-      expect{post :create, campaign: {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}.to change(Campaign, :count).by(1)
+      expect {post :create, :params => { :campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}}.to change(Campaign, :count).by(1)
     end
 
     it "assigns the new campaign to @campaign" do
-      post :create, campaign: {title: RandomData.random_sentence, scoring: RandomData.random_sentence}
+      post :create, :params =>  {:campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
       expect(assigns(:campaign)).to eq Campaign.last
     end
 
     it "redirects to the new campaign" do
-      post :create, campaign: {title: RandomData.random_sentence, scoring: RandomData.random_sentence}
+      post :create, :params => {:campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
       expect(response).to redirect_to Campaign.last
     end
   end
