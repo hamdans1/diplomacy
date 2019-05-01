@@ -16,13 +16,23 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
-  # describe "GET #show" do
-  #   it "returns http success" do
-  #     get :show
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
-  #
+  describe "GET #show" do
+    it "returns http success" do
+      get :show, :params => {id: my_campaign.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the #show view" do
+      get :show, :params => {id: my_campaign.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "assigns my_campaign to @campaign" do
+      get :show, :params => {id: my_campaign.id}
+      expect(assigns(:campaign)).to eq(my_campaign)
+    end
+  end
+
   describe "GET #new" do
     it "returns http success" do
       get :new
