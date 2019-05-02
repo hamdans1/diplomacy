@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_164702) do
+ActiveRecord::Schema.define(version: 2019_05_02_163209) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string "title"
     t.string "scoring"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "group_id"
+    t.index ["group_id"], name: "index_campaigns_on_group_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -28,6 +30,14 @@ ActiveRecord::Schema.define(version: 2019_04_30_164702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campaign_id"], name: "index_games_on_campaign_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.boolean "public", default: true
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
