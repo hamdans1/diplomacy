@@ -1,7 +1,7 @@
 <h1><%= @group.name %></h1>
 
 <%= link_to "Edit Group", edit_group_path, class: "btn btn-success" %>
-
+<%= link_to "Delete Group", @group, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this group?"}%>
 <%# Insert Group All Time leaderboard here
 Consider iterating over individual games? %>
 
@@ -12,13 +12,18 @@ Consider iterating over individual games? %>
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
-            <%= link_to campaign.title, campaign %>
+            <%= link_to campaign.title, group_campaign_path(@group, campaign) %>
           </h4>
+          <small>
+            submitted <%= time_ago_in_words(campaign.created_at) %> ago <br>
+            <%= campaign.games.count %> Games Played
+          </small>
         </div>
       </div>
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= link_to "New Campaign", new_campaign_path(@campaign), class: "btn btn-success" %>
+    <%= link_to "New Campaign", new_group_campaign_path(@group), class: "btn btn-success" %>
+    <%= link_to "Delete Group", @group, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this group?"}%>
   </div>
 </div>

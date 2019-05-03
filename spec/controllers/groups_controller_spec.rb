@@ -65,4 +65,61 @@ RSpec.describe GroupsController, type: :controller do
       expect(response).to redirect_to Group.last
     end
   end
+
+  describe "GET edit" do
+    it "returns http success" do
+      get :edit, :params => {id: my_group.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the edit view" do
+      get :edit, :params => {id: my_group.id}
+      expect(response).to render_template :edit
+    end
+
+    it "assigns group to be update to @group" do
+      get :edit, :params => {id: my_group.id}
+      group_instance = assigns(:group)
+
+      expect(group_instance.id).to eq(my_group.id)
+      expect(group_instance.name).to eq(my_group.name)
+      expect(group_instance.description).to eq(my_group.description)
+    end
+  end
+
+  describe "PUT update" do
+    it "updates group with expected attributes" do
+      new_name = RandomData.random_sentence
+      new_description = RandomData.random_sentence
+
+      put :update, {:params => {:id => my_group.id, :group => {name: new_name, description: new_description}}}
+
+      updated_group = assigns(:group)
+
+      expect(updated_group.id).to eq my_group.id
+      expect(updated_group.name).to eq new_name
+      expect(updated_group.description).to eq new_description
+    end
+
+    it "redirects to the updated group" do
+      new_name = RandomData.random_sentence
+      new_description = RandomData.random_sentence
+
+      put :update, {:params => {:id => my_group.id, :group => {name: new_name, description: new_description}}}
+      expect(response).to redirect_to my_group
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "deletes the topic" do
+      delete :destroy, {:params => {:id => my_group.id}}
+      count = Group.where({id: my_group.id}).size
+      expect(count).to eq(0)
+    end
+
+    it "redirects to group index" do
+      delete :destroy, {:params => {:id => my_group.id}}
+      expect(response).to redirect_to groups_path
+    end
+  end
 end

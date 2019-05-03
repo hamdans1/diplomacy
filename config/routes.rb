@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :groups
-  resources :campaigns
+  resources :groups do
+    resources :campaigns, except: [:index]
+  end
 
   get 'about' => 'welcome#about'
 

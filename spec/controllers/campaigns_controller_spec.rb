@@ -2,50 +2,39 @@ require 'rails_helper'
 
 RSpec.describe CampaignsController, type: :controller do
 
-  let(:my_campaign) {Campaign.create!(title: "2018 Campaign", scoring:"Classic")}
-
-  describe "GET #index" do
-    it "returns http success" do
-      get :index
-      expect(response).to have_http_status(:success)
-    end
-
-    it "assigns [my_campaign] to @campaigns" do
-      get :index
-      expect(assigns(:campaigns)).to eq([my_campaign])
-    end
-  end
+  let(:my_group) { Group.create!(name: RandomData.random_sentence, description: RandomData.random_sentence)}
+  let(:my_campaign) {my_group.campaigns.create!(title: RandomData.random_sentence, scoring: RandomData.random_sentence)}
 
   describe "GET #show" do
     it "returns http success" do
-      get :show, :params => {id: my_campaign.id}
+      get :show, :params => {group_id: my_group.id, id: my_campaign.id}
       expect(response).to have_http_status(:success)
     end
 
     it "renders the #show view" do
-      get :show, :params => {id: my_campaign.id}
+      get :show, :params => {group_id: my_group.id, id: my_campaign.id}
       expect(response).to render_template :show
     end
 
     it "assigns my_campaign to @campaign" do
-      get :show, :params => {id: my_campaign.id}
+      get :show, :params => {group_id: my_group.id, id: my_campaign.id}
       expect(assigns(:campaign)).to eq(my_campaign)
     end
   end
 
   describe "GET #new" do
     it "returns http success" do
-      get :new
+      get :new, :params => {group_id: my_group.id}
       expect(response).to have_http_status(:success)
     end
 
     it "renders the #new view" do
-      get :new
+      get :new, :params => {group_id: my_group.id}
       expect(response).to render_template :new
     end
 
     it "instantiates @campaign" do
-      get :new
+      get :new, :params => {group_id: my_group.id}
       expect(assigns(:campaign)).not_to be_nil
     end
   end
@@ -53,33 +42,33 @@ RSpec.describe CampaignsController, type: :controller do
 
   describe "POST create" do
     it "increases the number of Campaign by 1" do
-      expect {post :create, :params => { :campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}}.to change(Campaign, :count).by(1)
+      expect {post :create, :params => { :group_id => my_group.id, :campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}}.to change(Campaign, :count).by(1)
     end
 
     it "assigns the new campaign to @campaign" do
-      post :create, :params =>  {:campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
+      post :create, :params =>  {:group_id => my_group.id, :campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
       expect(assigns(:campaign)).to eq Campaign.last
     end
 
     it "redirects to the new campaign" do
-      post :create, :params => {:campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
-      expect(response).to redirect_to Campaign.last
+      post :create, :params => {:group_id => my_group.id, :campaign => {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
+      expect(response).to redirect_to [my_group, Campaign.last]
     end
   end
 
   describe "GET #edit" do
     it "returns http success" do
-      get :edit, :params => {id: my_campaign.id}
+      get :edit, :params => { :group_id => my_group.id, id: my_campaign.id}
       expect(response).to have_http_status(:success)
     end
 
     it "returns the #edit view" do
-      get :edit, :params => {id: my_campaign.id}
+      get :edit, :params => { :group_id => my_group.id, id: my_campaign.id}
       expect(response).to render_template :edit
     end
 
     it "assigns campaign to be updated to @campaign" do
-      get :edit, :params => {id: my_campaign.id}
+      get :edit, :params => { :group_id => my_group.id, id: my_campaign.id}
       campaign_instance = assigns(:campaign)
 
       expect(campaign_instance.id).to eq my_campaign.id
@@ -93,7 +82,7 @@ RSpec.describe CampaignsController, type: :controller do
       new_title = RandomData.random_sentence
       new_scoring = RandomData.random_sentence
 
-      put :update, {:params => {:id => my_campaign.id, :campaign => {title: new_title, scoring: new_scoring}}}
+      put :update, {:params => {:group_id => my_group.id, :id => my_campaign.id, :campaign => {title: new_title, scoring: new_scoring}}}
 
       updated_campaign = assigns(:campaign)
       expect(updated_campaign.id).to eq my_campaign.id
@@ -105,21 +94,21 @@ RSpec.describe CampaignsController, type: :controller do
       new_title = RandomData.random_sentence
       new_scoring = RandomData.random_sentence
 
-      put :update, {:params => {:id => my_campaign.id, :campaign => {title: new_title, scoring: new_scoring}}}
-      expect(response).to redirect_to my_campaign
+      put :update, {:params => {:group_id => my_group.id, :id => my_campaign.id, :campaign => {title: new_title, scoring: new_scoring}}}
+      expect(response).to redirect_to [my_group, my_campaign]
     end
   end
 
   describe "DELETE destroy" do
     it "deletes the campaign" do
-      delete :destroy, {:params => {:id => my_campaign.id}}
+      delete :destroy, {:params => {:group_id => my_group.id, :id => my_campaign.id}}
       count = Campaign.where({id: my_campaign.id}).size
       expect(count).to eq(0)
     end
 
-    it "redirects to campaign index" do
-      delete :destroy, {:params => {:id => my_campaign.id}}
-      expect(response).to redirect_to campaigns_path
+    it "redirects to group show" do
+      delete :destroy, {:params => {:group_id => my_group.id, :id => my_campaign.id}}
+      expect(response).to redirect_to my_group
     end
   end
 

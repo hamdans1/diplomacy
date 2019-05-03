@@ -1,13 +1,11 @@
 class CampaignsController < ApplicationController
-  def index
-    @campaigns = Campaign.all
-  end
 
   def show
     @campaign = Campaign.find(params[:id])
   end
 
   def new
+    @group = Group.find(params[:group_id])
     @campaign = Campaign.new
   end
 
@@ -15,10 +13,13 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.new
     @campaign.title = params[:campaign][:title]
     @campaign.scoring = params[:campaign][:scoring]
+    @group = Group.find(params[:group_id])
+
+    @campaign.group = @group
 
     if @campaign.save
       flash[:notice] = "Post was saved."
-      redirect_to @campaign
+      redirect_to [@group, @campaign]
     else
       flash.now[:alert] = "There was an error saving your post. Please try again."
       render :new
@@ -36,7 +37,7 @@ class CampaignsController < ApplicationController
 
     if @campaign.save
       flash[:notice] = "Your campaign has been updated"
-      redirect_to @campaign
+      redirect_to [@campaign.group, @campaign]
     else
       flash.now[:alert] = "There was an error saving your campaign. Please Try again"
       render :edit
@@ -48,7 +49,7 @@ class CampaignsController < ApplicationController
 
     if @campaign.destroy
       flash[:notice] = "#{@campaign.title} was deleted successfully."
-      redirect_to campaigns_path
+      redirect_to @campaign.group
     else
       flash.now[:alert] = "There was an error deleting the post."
       render :show
