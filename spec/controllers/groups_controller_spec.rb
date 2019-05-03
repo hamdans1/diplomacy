@@ -15,4 +15,21 @@ RSpec.describe GroupsController, type: :controller do
       expect(assigns(:groups)).to eq([my_group])
     end
   end
+
+  describe "GET show" do
+    it "returns http success" do
+      get :show, :params => {id: my_group.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the #show view" do
+      get :show, :params => {id: my_group.id}
+      expect(response).to render_template :show
+    end
+
+    it "assigns my_group to @group" do
+      get :show, :params => {id: my_group.id}
+      expect(assigns(:group)).to eq (my_group)
+    end
+  end
 end

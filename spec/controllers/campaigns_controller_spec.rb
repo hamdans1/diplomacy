@@ -24,7 +24,7 @@ RSpec.describe CampaignsController, type: :controller do
 
     it "renders the #show view" do
       get :show, :params => {id: my_campaign.id}
-      expect(response).to have_http_status(:success)
+      expect(response).to render_template :show
     end
 
     it "assigns my_campaign to @campaign" do
