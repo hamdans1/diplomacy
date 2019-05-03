@@ -6,7 +6,7 @@ RSpec.describe Group, type: :model do
   let(:description) {RandomData.random_sentence}
   let(:group) {Group.create!(name:name, description: description)}
 
-  it {should have_many(:campaigns)}
+  it { is_expected.to have_many(:campaigns)}
 
   describe "attributes" do
     it "has name and description attributes" do
