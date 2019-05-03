@@ -15,4 +15,29 @@ module RandomData
     letters.shuffle!
     letters[0, rand(3..8)].join
   end
+
+  def self.random_year
+    rand(1950..2050)
+  end
+
+  def self.random_scoring
+    scoring_array = [
+      "classic",
+      "dixieland",
+      "modern",
+      "modified classic"
+    ]
+    scoring_array[rand(0...3)]
+  end
+
+  def self.random_style
+    styles = [
+      "Anonymous",
+      "Gunboat",
+      "Random",
+      "Selected"
+    ]
+    styles[rand(0...3)]
+  end
+
 end

@@ -1,9 +1,10 @@
 require 'random_data'
+require 'faker'
 
 15.times do
   Group.create!(
-    name: RandomData.random_sentence,
-    description: RandomData.random_sentence
+    name: "#{Faker::TvShows::GameOfThrones.unique.house} Diplomacy Group",
+    description: Faker::TvShows::GameOfThrones.quote
   )
 end
 
@@ -12,8 +13,8 @@ groups = Group.all
 50.times do
   Campaign.create!(
     group: groups.sample,
-    title: RandomData.random_sentence,
-    scoring: RandomData.random_sentence
+    title: "#{RandomData.random_year} Campaign",
+    scoring: RandomData.random_scoring
   )
 end
 
@@ -22,10 +23,10 @@ campaigns = Campaign.all
 100.times do
   Game.create!(
     campaign: campaigns.sample,
-    title: RandomData.random_sentence,
-    scoring: RandomData.random_sentence,
-    map: RandomData.random_sentence,
-    style: RandomData.random_sentence
+    title: "#{Faker::TvShows::GameOfThrones.city} battle #{rand(0..6)}",
+    scoring: RandomData.random_scoring,
+    map: Faker::Nation.nationality,
+    style: RandomData.random_style
   )
 end
 
