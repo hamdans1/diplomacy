@@ -5,5 +5,6 @@ class Campaign < ApplicationRecord
   validates :title, length: {minimum: 3}, presence: true
   validates :scoring, length: {minimum: 3}, presence: true
   validates :group, presence: true
+
   
 end
