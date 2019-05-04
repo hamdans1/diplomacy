@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_02_163209) do
+ActiveRecord::Schema.define(version: 2019_05_04_172056) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string "title"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 2019_05_02_163209) do
     t.string "name"
     t.boolean "public", default: true
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
