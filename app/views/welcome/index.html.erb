@@ -1,2 +1,23 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<br>
+<div class="jumbotron">
+  <h1>The Diplomacy Tracker</h1>
+  <p>The Diplomacy Tracker is a site meant for keeping track of group Diplomacy games and tournaments. Track your diplomacy games by the campaign, tournament or game. You can track all time standings for your group and a personal history of your Diplomacy standings.</p>
+  <p>
+    <%= link_to "Sign Up", new_user_path, class: "btn btn-primary" %> today!
+  </p>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <h2>Start a New Group</h2>
+    <p>Start a group with friends and track your statistics through campaigns, tournaments, and one-off games.</p>
+  </div>
+  <div class="col-md-4">
+    <h2>Join an Existing Group</h2>
+    <p>Want to join a group that already exists? Search through all of the groups available.</p>
+  </div>
+  <div class="col-md-4">
+    <h2>View All Time Stats</h2>
+    <p>See all of our statistics by country, game style, map, platform, or scoring style.</p>
+  </div>
+</div>
