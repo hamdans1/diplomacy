@@ -1,6 +1,16 @@
 require 'random_data'
 require 'faker'
 
+50.times do
+  User.create!(
+    name: Faker::TvShows::GameOfThrones.character,
+    email: "#{Faker::TvShows::GameOfThrones.character}@#{Faker::University.name}.#{Faker::University.suffix}",
+    password: "helloworld"
+  )
+end
+
+users = User.all
+
 15.times do
   Group.create!(
     name: "#{Faker::TvShows::GameOfThrones.unique.house} Diplomacy Group",
@@ -12,6 +22,7 @@ groups = Group.all
 
 50.times do
   Campaign.create!(
+    user: users.sample,
     group: groups.sample,
     title: "#{RandomData.random_year} Campaign",
     scoring: RandomData.random_scoring
@@ -31,6 +42,7 @@ campaigns = Campaign.all
 end
 
 puts "Seed finished"
+puts "#{User.count} users created"
 puts "#{Group.count} groups created"
 puts "#{Campaign.count} campaigns created"
 puts "#{Game.count} games created"

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :campaigns
 
   before_save {self.email = email.downcase if email.present?}
 
