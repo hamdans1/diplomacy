@@ -1,4 +1,9 @@
-<h1><%= @campaign.title %></h1>
+<h1>
+  <%= @campaign.title %> <br>
+  <small>
+    submitted <%= time_ago_in_words(@campaign.created_at) %> ago by <%= @campaign.user.name %>
+  </small>
+</h1>
 <p><%= @campaign.scoring %></p>
 
 <div class="row">

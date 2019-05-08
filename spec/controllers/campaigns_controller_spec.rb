@@ -3,8 +3,71 @@ include SessionsHelper
 
 RSpec.describe CampaignsController, type: :controller do
 
+  let(:my_user) {User.create!(name:RandomData.random_word, email: RandomData.random_sentence, password: "helloworld")}
   let(:my_group) { Group.create!(name: RandomData.random_sentence, description: RandomData.random_sentence)}
-  let(:my_campaign) {my_group.campaigns.create!(title: RandomData.random_sentence, scoring: RandomData.random_sentence)}
+  let(:my_campaign) {my_group.campaigns.create!(title: RandomData.random_sentence, scoring: RandomData.random_sentence, user: my_user)}
+
+  context "guest user" do
+
+    describe "GET show" do
+      it "returns http success" do
+        get :show, :params => {group_id: my_group.id, id: my_campaign.id}
+        expect(response).to have_http_status(:success)
+      end
+
+      it "renders the #show view" do
+        get :show, :params => {group_id: my_group.id, id: my_campaign.id}
+        expect(response).to render_template :show
+      end
+
+      it "assigns my_campaign to @campaign" do
+        get :show, :params => {group_id: my_group.id, id: my_campaign.id}
+        expect(assigns(:campaign)).to eq(my_campaign)
+      end
+    end
+
+    describe "GET new" do
+      it "returns http redirect" do
+        get :new, :params => {group_id: my_group.id}
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+
+    describe "POST create" do
+      it "returns http redirect" do
+        post :create, :params => {group_id: my_group.id, campaign: {title: RandomData.random_sentence, scoring: RandomData.random_sentence}}
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+
+    describe "GET edit" do
+      it "returns http redirect" do
+        get :edit, :params => {group_id: my_group.id, id: my_campaign.id}
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+
+    describe "PUT update" do
+      it "returns http redirect" do
+        new_title = RandomData.random_sentence
+        new_scoring = RandomData.random_scoring
+        put :update, :params => {group_id: my_group.id, id: my_campaign.id, campaign: {title: new_title, scoring: new_scoring}}
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "returns http redirect" do
+        delete :destroy, :params => {group_id: my_group.id, id: my_campaign.id}
+        expect(response).to have_http_status(:redirect)
+      end
+    end
+  end
+
+  context "signed-in user" do
+    before do
+      create_session(my_user)
+    end
 
   describe "GET #show" do
     it "returns http success" do
@@ -112,5 +175,5 @@ RSpec.describe CampaignsController, type: :controller do
       expect(response).to redirect_to my_group
     end
   end
-
+end
 end

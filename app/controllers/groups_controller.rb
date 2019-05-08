@@ -13,10 +13,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new
-    @group.name = params[:group][:name]
-    @group.description = params[:group][:description]
-    @group.public = params[:group][:public]
+    @group = Group.new(group_params)
 
     if @group.save
       redirect_to @group
@@ -34,9 +31,7 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
 
-    @group.name = params[:group][:name]
-    @group.description = params[:group][:description]
-    @group.public = params[:group][:public]
+    @group.assign_attributes(group_params)
 
     if @group.save
       flash[:notice] = "Group was updated"
@@ -57,6 +52,12 @@ class GroupsController < ApplicationController
       flash.now[:alert] = "There was an error trying to delete this group."
       render :show
     end
+  end
+
+  private
+
+  def group_params
+    params.require(:group).permit(:name, :description, :public)
   end
 
 end

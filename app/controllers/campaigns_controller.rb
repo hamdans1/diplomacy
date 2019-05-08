@@ -1,5 +1,7 @@
 class CampaignsController < ApplicationController
 
+  before_action :require_sign_in, except: :show
+
   def show
     @campaign = Campaign.find(params[:id])
   end
@@ -10,12 +12,9 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    @campaign = Campaign.new
-    @campaign.title = params[:campaign][:title]
-    @campaign.scoring = params[:campaign][:scoring]
     @group = Group.find(params[:group_id])
-
-    @campaign.group = @group
+    @campaign = @group.campaigns.build(campaign_params)
+    @campaign.user = current_user
 
     if @campaign.save
       flash[:notice] = "Post was saved."
@@ -32,8 +31,7 @@ class CampaignsController < ApplicationController
 
   def update
     @campaign = Campaign.find(params[:id])
-    @campaign.title = params[:campaign][:title]
-    @campaign.scoring = params[:campaign][:scoring]
+    @campaign.assign_attributes(campaign_params)
 
     if @campaign.save
       flash[:notice] = "Your campaign has been updated"
@@ -54,5 +52,11 @@ class CampaignsController < ApplicationController
       flash.now[:alert] = "There was an error deleting the post."
       render :show
     end
+  end
+
+  private
+
+  def campaign_params
+    params.require(:campaign).permit(:title, :scoring)
   end
 end
