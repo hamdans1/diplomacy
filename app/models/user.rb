@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :campaigns
 
   before_save {self.email = email.downcase if email.present?}
+  before_save {self.role ||= :member}
 
   validates :name, length: { minimum: 3, maximum: 25 }, presence: true
 
@@ -12,4 +13,6 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  enum role: [:member, :admin]
+  
 end
