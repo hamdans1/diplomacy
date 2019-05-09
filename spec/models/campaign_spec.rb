@@ -14,6 +14,8 @@ RSpec.describe Campaign, type: :model do
    it { is_expected.to belong_to(:group) }
    it {is_expected.to belong_to(:user)}
 
+   it {is_expected.to have_many(:games)}
+
    it { is_expected.to validate_presence_of(:title)}
    it { is_expected.to validate_presence_of(:scoring)}
    it { is_expected.to validate_presence_of(:group)}
