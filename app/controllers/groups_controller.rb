@@ -66,7 +66,7 @@ class GroupsController < ApplicationController
   def authorize_user
     unless current_user.admin?
       flash[:alert] = "You must be an admin to do that."
-      redirect_to topics_path
+      redirect_to groups_path
     end
   end
 
