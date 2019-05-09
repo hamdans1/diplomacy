@@ -1,6 +1,7 @@
 class CampaignsController < ApplicationController
 
   before_action :require_sign_in, except: :show
+  before_action :authorize_user, except: [:show, :new, :create]
 
   def show
     @campaign = Campaign.find(params[:id])
@@ -59,4 +60,14 @@ class CampaignsController < ApplicationController
   def campaign_params
     params.require(:campaign).permit(:title, :scoring)
   end
+
+  def authorize_user
+    campaign = Campaign.find(params[:id])
+
+    unless current_user == campaign.user || current_user.admin?
+      flash[:alert] = "You must be an admin to do that."
+      redirect_to [campaign.group, campaign]
+    end
+  end
+
 end
