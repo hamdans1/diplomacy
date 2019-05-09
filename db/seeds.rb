@@ -9,6 +9,19 @@ require 'faker'
   )
 end
 
+admin = User.create!(
+  name: 'Admin User',
+  email: 'admin@diplo.com',
+  password: 'helloworld',
+  role: 'admin'
+)
+
+member = User.create!(
+  name: 'Member User',
+  email: 'member@diplo.com',
+  password: 'helloworld'
+)
+
 users = User.all
 
 15.times do

@@ -1,7 +1,9 @@
 <h1><%= @group.name %></h1>
 
-<%= link_to "Edit Group", edit_group_path, class: "btn btn-success" %>
-<%= link_to "Delete Group", @group, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this group?"}%>
+<% if user_is_authorized_for_groups? %>
+  <%= link_to "Edit Group", edit_group_path, class: "btn btn-success" %>
+  <%= link_to "Delete Group", @group, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this group?"}%>
+<% end %>
 <%# Insert Group All Time leaderboard here
 Consider iterating over individual games? %>
 
@@ -23,7 +25,8 @@ Consider iterating over individual games? %>
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= link_to "New Campaign", new_group_campaign_path(@group), class: "btn btn-success" %>
-    <%= link_to "Delete Group", @group, method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this group?"}%>
+    <% if current_user %>
+      <%= link_to "New Campaign", new_group_campaign_path(@group), class: "btn btn-success" %>
+    <% end %>
   </div>
 </div>
