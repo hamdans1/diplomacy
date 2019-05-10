@@ -4,8 +4,16 @@
     submitted <%= time_ago_in_words(@campaign.created_at) %> ago by <%= @campaign.user.name %>
   </small>
 </h1>
-<p><%= @campaign.scoring %></p>
-
+<div class="col-md-8">
+  <p><%= @campaign.scoring %></p>
+  <div>
+    <h3>Games</h3>
+    <%= render @campaign.games %>
+  </div>
+  <% if current_user %>
+    <%= render 'games/form', game: Game.new, campaign: @campaign %>
+  <% end %>
+</div>
 <div class="row">
   <% if user_is_authorized_for_campaign?(@campaign) %>
     <div class="col-md-8">
