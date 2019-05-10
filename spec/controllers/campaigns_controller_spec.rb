@@ -7,7 +7,7 @@ RSpec.describe CampaignsController, type: :controller do
   let(:my_user) {User.create!(name:"DiploUser", email: "user@diplo.com", password: "helloworld")}
   let(:other_user) {User.create!(name: RandomData.random_sentence, email: RandomData.random_sentence, password: "helloworld", role: :member)}
   let(:my_group) { Group.create!(name: RandomData.random_sentence, description: RandomData.random_sentence)}
-  let(:my_campaign) {my_group.campaigns.create!(title: RandomData.random_sentence, scoring: RandomData.random_sentence, user: my_user)}
+  let(:my_campaign) {my_group.campaigns.create!(title: RandomData.random_sentence, scoring: RandomData.random_scoring, user: my_user)}
 
   context "guest user" do
 

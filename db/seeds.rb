@@ -46,6 +46,7 @@ campaigns = Campaign.all
 
 100.times do
   Game.create!(
+    user: users.sample,
     campaign: campaigns.sample,
     title: "#{Faker::TvShows::GameOfThrones.city} battle #{rand(0..6)}",
     scoring: RandomData.random_scoring,
