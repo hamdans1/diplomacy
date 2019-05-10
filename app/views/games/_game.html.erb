@@ -1,7 +1,7 @@
 <div class="media">
   <div class="media-body">
     <small>
-      <%= game.user.name %> created <%= time_ago_in_words(game.create_at) %> ago
+      <%= game.user.name %> created <%= time_ago_in_words(game.created_at) %> ago
       <% if user_is_authorized_for_game?(game) %>
         | <%= link_to "Delete", [@campaign, game], method: :delete %>
       <% end %>
