@@ -44,5 +44,5 @@ class GamesController < ApplicationController
       redirect_to [game.campaign.group, game.campaign]
     end
   end
-  
+
 end
